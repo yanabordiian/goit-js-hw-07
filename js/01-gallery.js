@@ -18,16 +18,21 @@ const galleryMarkup = galleryItems
 )
 .join('');
 galleryEl.insertAdjacentHTML('beforeend', galleryMarkup);
-galleryEl.addEventListener('click', e => {
-    e.preventDefault();
-    if(e.target.nodeName !== 'IMG') {return;}
-     const picture = basicLightbox.create(`
-     <img src = ${e.target.dataset.source} width="800" height="600">
-     `);
-     picture.show();
-     galleryEl.addEventListener('keydown', e => {
-        if(e.code === 'Escape') {picture.close();}
-     });
-});
+galleryEl.addEventListener('click', onPictureClick);
+
+function onPictureClick(e) {
+  e.preventDefault();
+  if(e.target.nodeName !== 'IMG') {return;}
+  const picture = basicLightbox.create(`
+  <img src = ${e.target.dataset.source} width="800" height="600">
+  `);
+  picture.show();
+  const closePictureOnEscape = e => {
+    if(e.code === 'Escape') {
+      picture.close();
+    document.removeEventListener('keydown', closePictureOnEscape);}
+  }
+}
+
 
 console.log(galleryItems);
