@@ -22,16 +22,19 @@ galleryEl.addEventListener('click', onPictureClick);
 
 function onPictureClick(e) {
   e.preventDefault();
-  if(e.target.nodeName !== 'IMG') {return;}
-  const picture = basicLightbox.create(`
-  <img src = ${e.target.dataset.source} width="800" height="600">
-  `);
-  picture.show();
+
   const closePictureOnEscape = e => {
     if(e.code === 'Escape') {
       picture.close();
     document.removeEventListener('keydown', closePictureOnEscape);}
   }
+  if(e.target.nodeName !== 'IMG') {return;}
+  const picture = basicLightbox.create(`
+  <img src = ${e.target.dataset.source} width="800" height="600">
+  `);
+  picture.show();
+  document.addEventListener('keydown', closePictureOnEscape);
+  
 }
 
 
